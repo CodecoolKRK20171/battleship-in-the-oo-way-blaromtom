@@ -2,6 +2,7 @@ import sys
 import time
 import os
 from player import *
+from AI import *
 import constants
 
 
@@ -54,9 +55,8 @@ def make_title_screen(title_file):
     title_list = read_file(title_file)
     title = '\n'.join(title_list)
     width = len(title_list[1])
-    credits = ['Tomasz Sowa', 'Błażej Pierzak', 'Mateusz Romanowski']
 
-    for author in credits:
+    for author in constants.CREDITS:
         title += '\n{:^{width}}'.format(author, width=width)
 
     return title + '\n'
@@ -79,39 +79,40 @@ def check_winner(players):
             end_game(winner, loser)
 
 
-def print_game_info(player):
+def make_players():
     '''
-    Function to print info about actual state of player and it's objects
+    Function to make players depending on users choice if he wants to face AI or other humanoid
 
-    Parameters:
-    -----------
-    player - Player obj
+    Return:
+    -------
+    list of Player obj
     '''
-    player.ocean.print_board(show_hide=False)
-    print('\nLeft in battle: \n')
-    for ship in player.ocean.ships:
-        if not ship.is_submerged:
-            print('{0} (lenght: {1} sq  uares)'.format(ship.ship_type, constants.SHIPS_TO_PLACE[ship.ship_type]))
-    print('\n')
+    players = []
+    if ask_if_single_player():
+        os.system('clear')
+        players = [AI(), Player(input("Enter player's name: "))]
+    else:
+        for i in range(2):
+            os.system('clear')
+            players.append(Player(input("Enter player's name: ")))
+    os.system('clear')
+    return players
 
 
 def main():
     print(make_title_screen('title.txt'))
-    players = []
-    for i in range(2):
-        players.append(Player(input("Enter player's name: ")))
-        os.system('clear')
+    players = make_players()
     n = 0
     while True:
         print('\n{} is shooting:\n'.format(players[n % 2].name))
-        print_game_info(players[abs((n % 2) - 1)])
+        players[abs((n % 2) - 1)].print_game_info()
         shoot = players[n % 2].shoot()
         result = players[abs((n % 2) - 1)].handle_rivals_shoot(shoot)
-        os.system('clear')
-        print('\n{}'.format(result))
+        players[n % 2].handle_shot_result(result)
         check_winner(players)
-        time.sleep(1)
-        if result == 'You missed':
+        time.sleep(2)
+        os.system('clear')
+        if result == 'Missed':
             n += 1
 
 

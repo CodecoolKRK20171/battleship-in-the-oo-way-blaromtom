@@ -1,6 +1,23 @@
 import constants
 
 
+def ask_if_single_player():
+    '''
+    Function to ask user if he wants to play in sigle player mode
+
+    Return:
+    -------
+    bool
+    '''
+    print('(1) - One player\n(2) - Two players')
+    while True:
+        choose = input('Choose option: ')
+        if choose == '1':
+            return True
+        elif choose == '2':
+            return False
+
+
 def set_ship_laying():
     '''
     Function to set laying of ship depends on user input
@@ -10,13 +27,15 @@ def set_ship_laying():
     str
     '''
     while True:
-        choose = input("\nEnter 'V', 'H', 'C' to place ship vertically, horizontally or curved: ")
+        choose = input("\nEnter 'V', 'H', 'C' to place ship vertically, horizontally or curved (or 'R' to place ship in random place): ")
         if choose.lower() == 'v':
             return 'vertical'
         elif choose.lower() == 'h':
             return 'horizontal'
         elif choose.lower() == 'c':
             return 'curved'
+        elif choose.lower() == 'r':
+            return 'random'
         else:
             print('Wrong choose')
 

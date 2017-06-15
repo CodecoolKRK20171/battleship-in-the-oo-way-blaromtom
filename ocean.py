@@ -22,7 +22,6 @@ class Ocean:
         Runs place_ship() method
         '''
         self.board = [[Square((x, y), self) for x in range(constants.WIDTH)] for y in range(constants.HEIGHT)]
-        self.place_ships()
 
     def print_board(self, show_hide=False):
         '''
@@ -80,6 +79,20 @@ class Ocean:
             self.clear_board()
             self.place_ships()
 
+    def place_random_ships(self):
+        '''
+        Method to place ships from SHIPS_TO_PLACE list in random place_ships
+        '''
+        self.ships = []
+        available_ships = sorted([ship for ship in constants.SHIPS_TO_PLACE if ship not in self.ships])
+        for ship_type in available_ships:
+            ship_squares = Ship.form_random_ship(self, ship_type)
+            self.ships.append(Ship(self, ship_squares, ship_type))
+        for line in self.board:
+            for square in line:
+                if square.char == '~':
+                    square.unmark()
+
     def make_ship(self, ship_type):
         '''
         Method to create Ship object of given type, and add it to list
@@ -90,15 +103,12 @@ class Ocean:
         '''
         print('Making {}:\n'.format(ship_type))
         laying = set_ship_laying()
-        if laying == 'curved':
+        if laying == 'random':
+            ship_squares = Ship.form_random_ship(self, ship_type)
+        elif laying == 'curved':
             ship_squares = Ship.form_curved_ship(self, ship_type)
         else:
             ship_squares = Ship.form_straight_ship(self, ship_type, laying)
-        for square in ship_squares:
-            for neighbour_square in square.get_neighbour_squares():
-                if neighbour_square not in ship_squares:
-                    neighbour_square.mark_as_missed()
-            square.mark_as_mast()
         self.ships.append(Ship(self, ship_squares, ship_type))
 
     def remove_ship(self, ship):

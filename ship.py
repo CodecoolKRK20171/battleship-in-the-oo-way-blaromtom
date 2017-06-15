@@ -1,4 +1,5 @@
 import constants
+import random
 from square import *
 from UI import *
 
@@ -20,6 +21,14 @@ class Ship:
         self.squares = squares
         self.is_submerged = False
         self.ship_type = ship_type
+        self.mark_on_board()
+
+    def mark_on_board(self):
+        for square in self.squares:
+            for neighbour_square in square.get_neighbour_squares():
+                if neighbour_square not in self.squares:
+                    neighbour_square.mark_as_missed()
+            square.mark_as_mast()
 
     def receive_hit(self, position):
         '''
@@ -114,4 +123,41 @@ class Ship:
         except IndexError:
             print('Not enough place for that ship, try again!')
             ship_squares = Ship.form_curved_ship(ocean, ship_type)
+        return ship_squares
+
+    @staticmethod
+    def form_random_ship(ocean, ship_type):
+        '''
+        Static method of class Ship.
+        Used to get Squares objects of ship of given type from given ocean in random position and laying
+
+        Arguments:
+        ----------
+        ocean - Ocean obj
+        ship_type - str
+
+        Return:
+        list of Square obj
+        '''
+        while True:
+            random_line = random.choice(ocean.board)
+            square = random.choice(random_line)
+            if square.char == ' ':
+                neighbours = square.get_neighbour_squares()
+                if any([neighbour.char == ' ' for neighbour in neighbours]):
+                    ship_squares = [square]
+                    break
+
+        while len(ship_squares) < constants.SHIPS_TO_PLACE[ship_type]:
+            posible_positions = []
+            for square in ship_squares:
+                for neighbours in square.get_neighbour_squares():
+                    if neighbours not in posible_positions and neighbours not in ship_squares and neighbours.char == ' ':
+                        posible_positions.append(neighbours)
+            if not posible_positions:
+                Ship.form_random_ship(ocean, ship_type)
+            else:
+                square = random.choice(posible_positions)
+                ship_squares.append(square)
+
         return ship_squares

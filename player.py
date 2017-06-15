@@ -18,6 +18,7 @@ class Player:
         self.name = name
         print('Player: {}\n'.format(self.name))
         self.ocean = Ocean()
+        self.ocean.place_ships()
 
     def shoot(self):
         '''
@@ -49,9 +50,29 @@ class Player:
                 if hited_square in ship.squares:
                     ship.receive_hit(shoot)
                     if ship.is_submerged:
-                        return 'You hit, and destroyed {}.'.format(ship.ship_type)
+                        return 'Hit and destroyed: {}'.format(ship.ship_type)
                     else:
-                        return 'You hit'
+                        return 'Hit'
             else:
                 self.ocean.board[y][x].mark_as_missed()
-                return 'You missed'
+                return 'Missed'
+        else:
+            return 'You shot this place previusly'
+
+    def handle_shot_result(self, result):
+        print('\n{}'.format(result))
+
+    def print_game_info(player):
+        '''
+        Function to print info about actual state of player and it's objects
+
+        Parameters:
+        -----------
+        player - Player obj
+        '''
+        player.ocean.print_board(show_hide=False)
+        print('\nLeft in battle: \n')
+        for ship in player.ocean.ships:
+            if not ship.is_submerged:
+                print('{0} (lenght: {1} squares)'.format(ship.ship_type, constants.SHIPS_TO_PLACE[ship.ship_type]))
+        print('\n')
