@@ -147,4 +147,44 @@ __Instance methods__
 
 ### `__ocean.py__`
 
+### Class Ocean
+
+__Attributes__
+
+* `board`
+  - data: list of lists of **Square** objects
+  - description: represents a board to play on
+
+* `ships`
+  - data: list of **Ship** objects
+  - description: all ships that appear on the *board*
+
+__Instance methods__
+
+* #### `__init__(self)`
+
+ Creates board of height and width prewritten in constans module, and fills it with Square obj
+ Runs place_ship() method
+
+* `print_board(self, show_hide=False)`
+
+ Method to print objects board with headers (taken from constants module). If *show_hide* is set to True, method prints whitespaces istead of **Square** obj which haven't been shot before
+
+* `clear_board(self)`
+
+ Method to unmark all Square objects from object's board
+
+* `place_ships(self)`
+
+ Method to place ships from list imported from constants module
+
+* `make_ship(self, ship)`
+
+ Method to create **_Ship_** object of given type, and add it to list
+
+* `remove_ship(self, ship)`
+
+ Method to remove **_Ship_** obj from list
+
+
 ### `__constants.py__`
