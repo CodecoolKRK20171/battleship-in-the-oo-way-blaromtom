@@ -1,3 +1,6 @@
+'''
+module with constant values needed in other modules
+'''
 import string
 
 HEIGHT = 10

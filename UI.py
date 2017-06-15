@@ -2,6 +2,13 @@ import constants
 
 
 def set_ship_laying():
+    '''
+    Function to set laying of ship depends on user input
+
+    Return:
+    -------
+    str
+    '''
     while True:
         choose = input("\nEnter 'V', 'H', 'C' to place ship vertically, horizontally or curved: ")
         if choose.lower() == 'v':
@@ -15,6 +22,17 @@ def set_ship_laying():
 
 
 def get_confirmation(question):
+    '''
+    Function to get confirmation from user
+
+    Arguments:
+    ----------
+    question - str
+
+    Return:
+    -------
+    bool
+    '''
     if input(question).lower() == 'y':
         return True
     else:
@@ -22,6 +40,18 @@ def get_confirmation(question):
 
 
 def get_coordinate(input_text):
+    '''
+    Function to get correct coordinate from user.
+    It uses data from constants module
+
+    Arguments:
+    ----------
+    input_text - str
+
+    Return:
+    -------
+    tuple (int, int)
+    '''
     while True:
         choose = input(input_text).upper()
         try:
@@ -36,6 +66,17 @@ def get_coordinate(input_text):
 
 
 def choose_ship(available_ships):
+    '''
+    Function to let user choose ship form given available_ships list
+
+    Arguments:
+    ----------
+    available_ships - list of str
+
+    Return:
+    -------
+    str
+    '''
     print('\nAvailable ships:\n')
     for i in range(len(available_ships)):
         print('{0} - {1} (lenght: {2} squares)'.format(i + 1, available_ships[i],

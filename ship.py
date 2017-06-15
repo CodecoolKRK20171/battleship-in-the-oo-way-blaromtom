@@ -4,6 +4,16 @@ from UI import *
 
 
 class Ship:
+    '''
+    class of Ship objects
+
+    Attributes:
+    -----------
+    ocean - Ocean obj
+    squares = list of Square obj
+    is_submerged = bool
+    ship_type = str
+    '''
 
     def __init__(self, ocean, squares, ship_type):
         self.ocean = ocean
@@ -12,6 +22,13 @@ class Ship:
         self.ship_type = ship_type
 
     def receive_hit(self, position):
+        '''
+        Method to react on hit in given position
+
+        Arguments:
+        ----------
+        position - tuple (int, int)
+        '''
         if not self.is_submerged:
             for square in self.squares:
                 if square.position == position:
@@ -20,6 +37,9 @@ class Ship:
                 self.become_submerged()
 
     def become_submerged(self):
+        '''
+        Method to change slef attribute is_submerged and mark it on ocean
+        '''
         self.is_submerged = True
         for square in self.squares:
             square.mark_as_submerged()
@@ -29,6 +49,19 @@ class Ship:
 
     @staticmethod
     def form_straight_ship(ocean, ship_type, laying):
+        '''
+        Static method of class Ship.
+        Used to get Squares objects of straight ship of given type from given ocean
+
+        Arguments:
+        ----------
+        ocean - Ocean obj
+        ship_type - str
+        laying - str
+
+        Return:
+        list of Square obj
+        '''
         build_direction = 'right' if laying == 'horizontal' else 'down'
         print("Select first position. The ship will continue building itself {} from this position.".format(build_direction))
         try:
@@ -52,7 +85,16 @@ class Ship:
     @staticmethod
     def form_curved_ship(ocean, ship_type):
         '''
-        Builds curved ship list.
+        Static method of class Ship.
+        Used to get Squares objects of curved ship of given type from given ocean
+
+        Arguments:
+        ----------
+        ocean - Ocean obj
+        ship_type - str
+
+        Return:
+        list of Square obj
         '''
         ship_squares = []
         try:
@@ -73,29 +115,3 @@ class Ship:
             print('Not enough place for that ship, try again!')
             ship_squares = Ship.form_curved_ship(ocean, ship_type)
         return ship_squares
-
-
-    #
-    # def check_shape(self, positions):
-    #     '''
-    #     Checks connection between a new and old parts of the ship.
-    #     Raises ValueError in case wrong position of the new part.
-    #     Arguments:
-    #     x coordinate    - int
-    #     y coordinate    - int
-    #     '''
-    #
-    #     for i in range(len(self.positions)):
-    #         orphaned_part = True
-    #         x = self.positions[i][0]
-    #         y = self.positions[i][1]
-    #         for j in range(len(self.positions)):
-    #             if (i != j) and (\
-    #                 (x == self.positions[j][0] and ( y-1 == self.positions[j][1] or y+1 == self.positions[j][1] ) ) or\
-    #                 (y == self.positions[j][1] and ( x-1 == self.positions[j][0] or x+1 == self.positions[j][0] ) ) ):
-    #                 return False
-    #         return True
-    #
-    #
-    #     if orphaned_part:
-    #
