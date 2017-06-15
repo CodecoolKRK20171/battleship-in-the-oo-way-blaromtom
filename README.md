@@ -187,4 +187,29 @@ __Instance methods__
  Method to remove **_Ship_** obj from list
 
 
-### `__constants.py__`
+ ### `__constants.py__`
+
+  Contains module with constant values needed in other modules
+
+
+ ### `__UI.py__`
+
+  Contains function of user interface
+
+ __Module functions__
+
+ * `set_ship_layint()`
+
+  Function to set laying of ship depends on user input
+
+ * `get_confirmation(question)`
+
+  Function to get confirmation from user
+
+ * `get_coordinate(input_text)`
+
+  Function to get correct coordinate from user. It uses data from constants module
+
+ * `choose_ship(available_ships)`
+
+  Function to let user choose ship form given *available_ships* list
