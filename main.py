@@ -9,7 +9,7 @@ def end_game(winner, loser):
     '''
     Function to print game sumary, and end program.
 
-    Attributes:
+    Parameters:
     -----------
     winner - Player obj
     loser - Player obj
@@ -27,7 +27,7 @@ def read_file(file_name):
     '''
     Function to read txt file.
 
-    Attributes:
+    Parameters:
     -----------
     file_name - str
 
@@ -43,7 +43,7 @@ def make_title_screen(title_file):
     '''
     Function to make title screen from title_file and credits
 
-    Attributes:
+    Parameters:
     -----------
     title_file - str
 
@@ -67,7 +67,7 @@ def check_winner(players):
     Function to check if one of player is a winner, by checking if other one has lost all of his ships.
     If yes, runs end_game() Function
 
-    Attributes:
+    Parameters:
     -----------
     players - list of Player obj
     '''
@@ -83,7 +83,7 @@ def print_game_info(player):
     '''
     Function to print info about actual state of player and it's objects
 
-    Attributes:
+    Parameters:
     -----------
     player - Player obj
     '''
