@@ -62,17 +62,14 @@ class Player:
     def handle_shot_result(self, result):
         print('\n{}'.format(result))
 
-    def print_game_info(player):
+    def print_game_info(self):
         '''
-        Function to print info about actual state of player and it's objects
+        Method to print info about actual state of player and it's objects
 
-        Parameters:
-        -----------
-        player - Player obj
         '''
-        player.ocean.print_board(show_hide=False)
+        self.ocean.print_board(show_hide=False)
         print('\nLeft in battle: \n')
-        for ship in player.ocean.ships:
+        for ship in self.ocean.ships:
             if not ship.is_submerged:
                 print('{0} (lenght: {1} squares)'.format(ship.ship_type, constants.SHIPS_TO_PLACE[ship.ship_type]))
         print('\n')
