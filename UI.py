@@ -27,7 +27,8 @@ def set_ship_laying():
     str
     '''
     while True:
-        choose = input("\nEnter 'V', 'H', 'C' to place ship vertically, horizontally or curved (or 'R' to place ship in random place): ")
+        input_text = "\nEnter 'V', 'H', 'C' to place ship vertically, horizontally or curved, 'R' to place ship in random place: "
+        choose = input(input_text)
         if choose.lower() == 'v':
             return 'vertical'
         elif choose.lower() == 'h':
@@ -36,6 +37,7 @@ def set_ship_laying():
             return 'curved'
         elif choose.lower() == 'r':
             return 'random'
+
         else:
             print('Wrong choose')
 
@@ -100,12 +102,16 @@ def choose_ship(available_ships):
     for i in range(len(available_ships)):
         print('{0} - {1} (lenght: {2} squares)'.format(i + 1, available_ships[i],
                                                        constants.SHIPS_TO_PLACE[available_ships[i]]))
+    print('\n{} - remove last placed ship'.format(len(available_ships) + 1))
     while True:
         try:
             choose = int(input('\nEnter number to choose: '))
             if choose - 1 in range(len(available_ships)):
                 return available_ships[choose - 1]
+            elif choose - 1 == len(available_ships):
+                return
             else:
                 raise ValueError
         except ValueError:
+
             print('Wrong choose!')

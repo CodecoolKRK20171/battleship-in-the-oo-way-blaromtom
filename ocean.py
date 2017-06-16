@@ -63,8 +63,15 @@ class Ocean:
             print('Place your ships in the ocean:\n')
             self.print_board(show_hide=True)
             ship_type = choose_ship(available_ships)
-            self.make_ship(ship_type)
-            available_ships.remove(ship_type)
+            if ship_type is None:
+                try:
+                    available_ships.append(self.ships[-1].ship_type)
+                    self.remove_ship(self.ships[-1])
+                except IndexError:
+                    print("\nYou haven't place any ship yet!\n")
+            else:
+                self.make_ship(ship_type)
+                available_ships.remove(ship_type)
         print('All ships placed\n')
         self.print_board(show_hide=True)
         end = get_confirmation('Press Y to confirm: ')
@@ -76,7 +83,6 @@ class Ocean:
         else:
             for ship in self.ships:
                 self.remove_ship(ship)
-            self.clear_board()
             self.place_ships()
 
     def place_random_ships(self):
@@ -120,5 +126,7 @@ class Ocean:
         ship - Ship obj
         '''
         for square in ship.squares:
-            square.unmark()
+            # square.unmark()
+            for neighbour in square.get_neighbour_squares():
+                neighbour.unmark()
         self.ships.remove(ship)
