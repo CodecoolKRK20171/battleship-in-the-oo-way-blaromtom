@@ -45,6 +45,29 @@ class Ocean:
 
         print(header_row + '\n' + dividing_line + '\n' + other_rows)
 
+    def get_orphaned_empty_squares(self, perpendicular=True):
+        '''
+        Method to get list of all squares which are surrounded by marked squares
+        with perpendicular=True return is a cross of squares
+
+        Arguments:
+        ----------
+        perpendicular - bool
+
+        Return:
+        -------
+        list of Square obj
+        '''
+        orphaned_empty_squares = []
+        for line in self.board:
+            for square in line:
+                neighbours = square.get_neighbour_squares(perpendicular)
+                if square in neighbours:
+                    neighbours.remove(square)
+                if all([neighbour.char != ' ' for neighbour in neighbours]):
+                    orphaned_empty_squares.append(square)
+        return orphaned_empty_squares
+
     def clear_board(self):
         '''
         Method to unmark all Square objects from object's board

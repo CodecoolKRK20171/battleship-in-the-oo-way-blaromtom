@@ -39,6 +39,7 @@ class AI(Player):
         if self.expected_ship:
             shoot_option = []
             for square in self.expected_ship:
+
                 neighbours = square.get_neighbour_squares(perpendicular=True)
                 for neighbour in neighbours:
                     if neighbour not in self.expected_ship and not neighbour.was_shot:
@@ -46,10 +47,15 @@ class AI(Player):
             attack = random.choice(shoot_option)
             self.previous_shots.append(attack)
         else:
+            orphaned_empty_squares = self.rivals_ocean.get_orphaned_empty_squares(perpendicular=True)
             while True:
                 random_line = random.choice(self.rivals_ocean.board)
-                if any([not square.was_shot for square in random_line]):
-                    attack = random.choice([square for square in random_line if not square.was_shot])
+                choose_options = [square for square in random_line if not square.was_shot]
+                for square in orphaned_empty_squares:
+                    if square in choose_options:
+                        choose_options.remove(square)
+                if choose_options:
+                    attack = random.choice(choose_options)
                     self.previous_shots.append(attack)
                     break
         shot_position = attack.position
