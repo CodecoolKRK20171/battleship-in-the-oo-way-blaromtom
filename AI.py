@@ -39,7 +39,7 @@ class AI(Player):
         if self.expected_ship:
             shoot_option = []
             for square in self.expected_ship:
-                neighbours = square.get_neighbour_squares()
+                neighbours = square.get_neighbour_squares(perpendicular=True)
                 for neighbour in neighbours:
                     if neighbour not in self.expected_ship and not neighbour.was_shot:
                         shoot_option.append(neighbour)

@@ -64,11 +64,8 @@ class Player:
 
     def print_game_info(self):
         '''
-        Function to print info about actual state of player and it's objects
+        Method to print info about actual state of player and it's objects
 
-        Parameters:
-        -----------
-        player - Player obj
         '''
         self.ocean.print_board(show_hide=False)
         print('\nLeft in battle: \n')
