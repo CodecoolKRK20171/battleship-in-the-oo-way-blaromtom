@@ -143,7 +143,7 @@ class Ship:
             random_line = random.choice(ocean.board)
             square = random.choice(random_line)
             if square.char == ' ':
-                neighbours = square.get_neighbour_squares()
+                neighbours = square.get_neighbour_squares(perpendicular=True)
                 if any([neighbour.char == ' ' for neighbour in neighbours]):
                     ship_squares = [square]
                     break
@@ -151,7 +151,7 @@ class Ship:
         while len(ship_squares) < constants.SHIPS_TO_PLACE[ship_type]:
             posible_positions = []
             for square in ship_squares:
-                for neighbours in square.get_neighbour_squares():
+                for neighbours in square.get_neighbour_squares(perpendicular=True):
                     if neighbours not in posible_positions and neighbours not in ship_squares and neighbours.char == ' ':
                         posible_positions.append(neighbours)
             if not posible_positions:

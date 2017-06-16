@@ -54,7 +54,7 @@ class Square:
         self.char = ' '
         self.was_shot = False
 
-    def get_neighbour_squares(self, distance=1):
+    def get_neighbour_squares(self, distance=1, perpendicular=False):
         '''
         Method to get neighbour squares of self in given distance
 
@@ -68,10 +68,18 @@ class Square:
         '''
         neighbours = []
         x, y = self.position
-        for delta_y in range(-distance, distance + 1):
+        if perpendicular:
+            for delta_y in range(-distance, distance + 1):
+                if Square.is_on_board((x, y+delta_y)) and (x, y+delta_y) != self.position:
+                    neighbours.append(self.ocean.board[y + delta_y][x])
             for delta_x in range(-distance, distance + 1):
-                if Square.is_on_board((x+delta_x, y+delta_y)):
-                    neighbours.append(self.ocean.board[y + delta_y][x + delta_x])
+                if Square.is_on_board((x + delta_x, y)) and (x + delta_x, y) != self.position:
+                    neighbours.append(self.ocean.board[y][x + delta_x])
+        else:
+            for delta_y in range(-distance, distance + 1):
+                for delta_x in range(-distance, distance + 1):
+                    if Square.is_on_board((x+delta_x, y+delta_y)):
+                        neighbours.append(self.ocean.board[y + delta_y][x + delta_x])
         return neighbours
 
     @staticmethod

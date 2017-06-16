@@ -15,7 +15,10 @@ def end_game(winner, loser):
     winner - Player obj
     loser - Player obj
     '''
-    print('\n'.join(read_file('game_over.txt')))
+    try:
+        print('\n'.join(read_file('game_over.txt')))
+    except FileNotFoundError:
+        print('GAME OVER')
     print('\n{} wins!'.format(winner.name))
     time.sleep(3)
     for player in [winner, loser]:
@@ -52,12 +55,17 @@ def make_title_screen(title_file):
     -------
     str
     '''
-    title_list = read_file(title_file)
-    title = '\n'.join(title_list)
-    width = len(title_list[1])
-
+    try:
+        title_list = read_file(title_file)
+        title = '\n'.join(title_list)
+        width = len(title_list[1])
+        allign = '^'
+    except FileNotFoundError:
+        title = 'BATTLESHIP\n'
+        width = 25
+        allign = '<'
     for author in constants.CREDITS:
-        title += '\n{:^{width}}'.format(author, width=width)
+        title += '\n{:{allign}{width}}'.format(author, allign=allign, width=width)
 
     return title + '\n'
 
