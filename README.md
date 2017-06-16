@@ -31,13 +31,48 @@ __Functions__
 
  Function to check if one of *player* is a winner, by checking if other one has lost all of his ships. If yes, runs end_game() function
 
-* #### `print_game_info(player)`
+### `__player.py__`
 
- Function to print info about actual state of *player* and it's objects
+ Class for Player objects.
+
+### Class Player
+
+ __Attributes__
+
+ * `name`
+    - data: str
+    - decription: player's name
+ * `ocean`
+    - data: Ocean obj
+    - description: stores all squares
+
+ __Instance methods__
+
+* #### `__init__(self, name)`
+
+ Constructs a `Player` object
+
+ * `shoot(self)`
+
+ Method to choose coordinate player want to shoot
+
+* `handle_rivals_shoot(self, shoot)`
+
+ Method to response for rivals *shoot* into given position(shoot)
+
+* `handle_shot_result(self, result)`
+
+ Prints *result*
+
+* `print_game_info(self)`
+
+ Function to print info about actual state of player and it's objects
+
 
 ### `__square.py__`
 
 class of `square` obj - parts of `Ocean` and `Ship` objects
+
 
 ### Class Square
 
@@ -45,7 +80,7 @@ __Attributes__
 
 * `ocean`
   - data: Ocean object
-  - description: dd
+  - description: stores all squares
 
 * `position`
   - data: tuple (int, int)
@@ -107,7 +142,7 @@ __Attributes__
 
 * `ocean`
   - data: Ocean object
-  - description: dd
+  - description: stores all squares
 
 * `squares`
   - data: list of `Square` objects
@@ -213,3 +248,48 @@ __Instance methods__
  * `choose_ship(available_ships)`
 
   Function to let user choose ship form given *available_ships* list
+
+
+
+### `__AI.py__`
+
+### Class AI
+
+Class that inherits from **Player** class
+Class for Artifician Inteligence player
+
+__Attributes__
+
+* `name`
+  - data: str
+  - description: represents a name of player
+
+* `ocean`
+  - data: **Ocean** object
+  - description: dd
+
+* `rivals_ocean`
+  - data: **Ocean** object
+  - description: represents the rival's ocean
+
+* `expected_ship`
+  - data: list od **Square** objects
+  - description: store info about where to expect next ship
+
+* `previous_shots`
+  - data: list of **Square** objects
+  - description: store info about where previous shots have beed
+
+__Instance methods__
+
+* #### `__init__(self)`
+
+ Construct an AI object as a computer player
+
+* `shoot(self)`
+
+ Method to choose random or consequent position of shoot
+
+* `handle_shot_result(self, result)`
+
+ Method to handle and react to *result* of self previous shot
